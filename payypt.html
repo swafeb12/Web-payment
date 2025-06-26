@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AllPayment Premium - Vannz</title>
+    <!-- Tailwind CSS CDN for modern and responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Mengatur font Inter secara global */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e0f2f7 0%, #c1d9e2 100%); /* Gradien latar belakang soft */
+            color: #2c3e50; /* Warna teks gelap yang elegan */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 24px; /* Padding di semua sisi untuk mobile */
+            box-sizing: border-box;
+            overflow-x: hidden; /* Mencegah scroll horizontal */
+        }
+
+        /* Container utama dengan bayangan dan sudut membulat lebih menonjol */
+        .main-container {
+            background-color: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); /* Bayangan yang lebih dalam */
+            padding: 48px 32px;
+            text-align: center;
+            max-width: 768px; /* Lebih lebar untuk desain yang lebih grand */
+            width: 100%;
+            border: 1px solid #dbe8ed; /* Garis tepi halus */
+            position: relative;
+            z-index: 10;
+            overflow: hidden; /* Untuk efek overlay */
+        }
+
+        /* Judul utama dengan gradien teks */
+        .gradient-text {
+            background: linear-gradient(45deg, #4CAF50, #2196F3); /* Gradien hijau ke biru */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Gaya untuk kartu pembayaran */
+        .payment-card {
+            background-color: #f7fcff; /* Warna kartu yang sangat lembut */
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 24px;
+            border: 1px solid #e0f2f7;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Bayangan halus */
+        }
+        .payment-card:hover {
+            transform: translateY(-5px); /* Efek naik saat hover */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            background-color: #eaf8ff; /* Perubahan warna sedikit saat hover */
+        }
+
+        /* Ikon di dalam kartu pembayaran */
+        .payment-icon {
+            font-size: 3rem; /* Ukuran ikon lebih besar */
+            margin-bottom: 16px;
+            opacity: 0.8;
+        }
+
+        /* Teks nomor yang dapat disalin */
+        .copyable-number {
+            font-weight: 700; /* Tebal */
+            color: #336699; /* Biru yang lebih dalam */
+            transition: color 0.2s ease-in-out;
+        }
+        .copyable-number:hover {
+            color: #007bff; /* Biru terang saat hover */
+        }
+
+        /* Tombol salin */
+        .copy-button {
+            background-color: #6a96e6; /* Warna biru tombol yang lembut */
+            color: white;
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-out;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .copy-button:hover {
+            background-color: #4a7bdc; /* Warna lebih gelap saat hover */
+            transform: translateY(-2px); /* Efek naik saat hover */
+        }
+        .copy-button:active {
+            transform: translateY(0); /* Efek tekan */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Bagian QR code */
+        .qr-section {
+            background: linear-gradient(135deg, #d3eaf0 0%, #c1d9e2 100%); /* Gradien latar belakang QR */
+            padding: 32px;
+            border-radius: 20px;
+            margin-top: 32px;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05); /* Bayangan inset */
+            border: 1px solid #b7cee4;
+        }
+
+        .qr-code-img {
+            border: 6px solid white; /* Bingkai putih tebal */
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Bayangan QR yang menonjol */
+            transition: transform 0.4s ease-in-out;
+            object-fit: contain; /* Memastikan QR code terlihat jelas */
+        }
+        .qr-code-img:hover {
+            transform: scale(1.05); /* Efek zoom saat hover */
+        }
+
+        /* Bagian hubungi kami */
+        .contact-section {
+            background-color: #f0f7f9;
+            padding: 28px;
+            border-radius: 20px;
+            margin-top: 32px;
+            border: 1px solid #ddeef5;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Tombol WhatsApp */
+        .whatsapp-button {
+            background-color: #25d366; /* Warna hijau WhatsApp */
+            color: white;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-out;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        .whatsapp-button:hover {
+            background-color: #1ea751;
+            transform: translateY(-3px);
+        }
+        .whatsapp-button:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        .whatsapp-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Notifikasi salin pop-up */
+        .copy-notification {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px); /* Awalnya di luar layar */
+            background-color: #333333; /* Latar belakang gelap */
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+            opacity: 0;
+            transition: all 0.4s ease-out; /* Transisi untuk masuk dan keluar */
+            z-index: 1000;
+            pointer-events: none; /* Tidak menghalangi interaksi */
+            font-weight: 500;
+        }
+        .copy-notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0); /* Masuk ke posisi */
+        }
+
+        /* Animasi fade-in untuk container utama */
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .animate-fadeInScale {
+            animation: fadeInScale 0.8s ease-out forwards;
+        }
+
+        /* Media queries untuk penyesuaian di layar kecil */
+        @media (max-width: 640px) {
+            .main-container {
+                padding: 32px 20px;
+                border-radius: 20px;
+            }
+            h1 {
+                font-size: 2.5rem;
+            }
+            .payment-icon {
+                font-size: 2.5rem;
+            }
+            .payment-card {
+                padding: 24px;
+            }
+            .qr-code-img {
+                width: 192px; /* Lebih kecil di mobile */
+                height: 192px;
+            }
+            .whatsapp-button {
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+            .whatsapp-icon {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body class="selection:bg-blue-100 selection:text-blue-800">
+    <div class="main-container animate-fadeInScale">
+        <h1 class="text-5xl sm:text-6xl font-extrabold mb-6 gradient-text">
+            All<span class="font-normal">Payment</span>
+        </h1>
+        <p class="text-xl sm:text-2xl text-gray-700 mb-10 leading-relaxed font-light">
+            Solusi Pembayaran Mudah dan Lengkap untuk Segala Kebutuhan Anda.
+        </p>
+
+        <!-- Bagian Pembayaran Dana -->
+        <div class="payment-card group">
+            <i class="fab fa-cc-paypal payment-icon text-blue-500 group-hover:text-blue-700"></i>
+            <h2 class="text-3xl font-semibold text-gray-800 mb-4">
+                DANA
+            </h2>
+            <p class="text-lg text-gray-600 mb-3">
+                Salin nomor DANA Anda di bawah:
+            </p>
+            <p class="text-3xl copyable-number" id="danaNumber">0821-3736-6514</p>
+            <button onclick="copyToClipboard('danaNumber', 'Nomor DANA')"
+                    class="copy-button mt-6 flex items-center justify-center mx-auto">
+                <i class="far fa-copy mr-2"></i> Salin Nomor
+            </button>
+        </div>
+
+        <!-- Bagian Pembayaran gopay -->
+        <div class="payment-card group">
+            <i class="fas fa-wallet payment-icon text-green-500 group-hover:text-green-700"></i>
+            <h2 class="text-3xl font-semibold text-gray-800 mb-4">
+                gopay
+            </h2>
+            <p class="text-lg text-gray-600 mb-3">
+                Salin nomor gopay Anda di bawah:
+            </p>
+            <p class="text-3xl copyable-number" id="DanaNumber">0851-6580-9286</p>
+            <button onclick="copyToClipboard('gopayNumber', 'Nomor gopay')"
+                    class="copy-button mt-6 flex items-center justify-center mx-auto">
+                <i class="far fa-copy mr-2"></i> Salin Nomor
+            </button>
+        </div>
+
+        <!-- Bagian QR AllPayment -->
+        <div class="qr-section">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-6">
+                Pindai QR AllPayment
+            </h2>
+            <p class="text-lg text-gray-700 mb-8">
+                Untuk pembayaran melalui QR Code (termasuk DANA, GoPay, OVO, LinkAja, dan lainnya), silakan pindai gambar di bawah ini:
+            </p>
+            <div class="flex justify-center">
+                <!-- PENTING: Ganti URL di bawah dengan URL foto QR Code Anda sendiri -->
+                <img src="https://img1.pixhost.to/images/6769/615476916_imgtmp.jpg"
+                     alt="QR Code AllPayment"
+                     class="qr-code-img w-56 h-56 sm:w-64 sm:h-64"
+                     onerror="this.onerror=null; this.src='https://placehold.co/300x300/f8f9fa/e74c3c?text=QR+Tidak+Tersedia';">
+            </div>
+            <p class="text-sm text-gray-500 mt-6">
+                *Pastikan QR Code adalah valid dan milik Anda.
+            </p>
+        </div>
+
+        <!-- Bagian Hubungi Kami -->
+        <div class="contact-section">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-6">
+                Sudah TF?
+            </h2>
+            <p class="text-lg text-gray-700 mb-8">
+                Kirim bukti TF sekarang, silahkan klik di bawah ini.
+            </p>
+            <a href="https://wa.me/6282137366514?text=Halo+Bang+gw+dah+transfer+ke+payment.+Ini+bukti+pembayarannya"
+               target="_blank" rel="noopener noreferrer"
+               class="whatsapp-button">
+                <i class="fab fa-whatsapp whatsapp-icon"></i> Hubungi via WhatsApp
+            </a>
+            <p class="text-sm text-gray-500 mt-6">
+                Sertakan bukti TF✅
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-12 text-gray-500 text-sm">
+            <p>&copy; 2025 Created by <span class="font-medium text-blue-600">VANNZ</span>. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Notifikasi Salin Pop-up -->
+    <div id="copyNotification" class="copy-notification">
+        Tersalin!
+    </div>
+
+    <script>
+        // Fungsi untuk menyalin teks ke clipboard
+        function copyToClipboard(elementId, label) {
+            const element = document.getElementById(elementId);
+            const textToCopy = element.textContent || element.innerText; // Ambil teks dari elemen
+
+            // Buat elemen textarea sementara untuk menyalin teks
+            const textArea = document.createElement("textarea");
+            textArea.value = textToCopy;
+            document.body.appendChild(textArea);
+            textArea.select(); // Pilih teks di textarea
+
+            try {
+                // Coba salin teks
+                const successful = document.execCommand('copy');
+                const message = successful ? `${label} berhasil disalin!` : `Gagal menyalin ${label}.`;
+                showNotification(message); // Tampilkan notifikasi
+            } catch (err) {
+                console.error('Gagal menyalin teks: ', err);
+                showNotification(`Gagal menyalin ${label}.`);
+            } finally {
+                document.body.removeChild(textArea); // Hapus textarea sementara
+            }
+        }
+
+        // Fungsi untuk menampilkan notifikasi pop-up
+        function showNotification(message) {
+            const notification = document.getElementById('copyNotification');
+            notification.textContent = message;
+            notification.classList.add('show'); // Tambahkan kelas 'show' untuk menampilkan
+            
+            // Atur waktu agar notifikasi menghilang setelah beberapa detik
+            setTimeout(() => {
+                notification.classList.remove('show'); // Hapus kelas 'show' untuk menyembunyikan
+            }, 2500); // Notifikasi akan hilang setelah 2.5 detik
+        }
+
+        // Tambahkan event listener untuk nomor yang dapat disalin (opsional, karena ada tombol)
+        document.addEventListener('DOMContentLoaded', () => {
+            // Contoh jika ingin nomornya juga bisa diklik untuk menyalin
+            const danaNumberElement = document.getElementById('danaNumber');
+            if (danaNumberElement) {
+                danaNumberElement.addEventListener('click', () => copyToClipboard('danaNumber', 'Nomor DANA'));
+            }
+
+            const gopayNumberElement = document.getElementById('gopayNumber');
+            if (gopayNumberElement) {
+                gopayNumberElement.addEventListener('click', () => copyToClipboard('gopayNumber', 'Nomor Gopay'));
+            }
+        });
+    </script>
+</body>
+</html>
